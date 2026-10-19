@@ -8,16 +8,19 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="GP6">
-<link rel="apple-touch-icon" href="icon.png">
+<!-- НОВАЯ ИКОНКА -->
+<link rel="apple-touch-icon" href="gospodar_icon.png">
 <title>GospodarPro</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: system-ui, -apple-system, sans-serif; }
-body { background-color: #121212; background-image: url('bg.png'); background-size: cover; background-position: center; background-attachment: fixed; color: #fff; padding: 20px; padding-bottom: 100px; }
-
-/* Кнопка переключения языка */
-.lang-switch { position: absolute; top: 20px; right: 20px; background: rgba(76, 175, 80, 0.2); border: 1px solid #4caf50; color: #4caf50; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 14px; cursor: pointer; z-index: 10; }
-.lang-switch:active { background: #4caf50; color: #fff; }
-
+body { 
+    background-color: #121212;
+    background-image: url('bg_leaves.png'); /* Если фон назывался иначе, замени здесь */
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed;
+    color: #fff; padding: 20px; padding-bottom: 100px; 
+}
 .header { text-align: center; margin-bottom: 30px; margin-top: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 .logo { font-size: 28px; font-weight: 900; letter-spacing: 1px; color: #fff; text-transform: uppercase; }
 .logo span { color: #4caf50; }
@@ -32,9 +35,14 @@ body { background-color: #121212; background-image: url('bg.png'); background-si
 .service-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
 .service-name { font-size: 15px; font-weight: 500; }
 .service-price { font-size: 13px; font-weight: bold; color: #1ed760; background: rgba(30, 215, 96, 0.15); padding: 4px 10px; border-radius: 6px; align-self: flex-start; }
-
 .call-button { position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(90deg, #4caf50, #45a049); color: #fff; border: none; font-size: 18px; font-weight: bold; padding: 18px; text-align: center; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 -4px 15px rgba(0,0,0,0.5); z-index: 100; cursor: pointer; }
 .call-button svg { width: 24px; height: 24px; fill: currentColor; }
+
+/* Кнопка смены языка */
+.lang-switch { position: absolute; top: 20px; right: 20px; background: rgba(76, 175, 80, 0.2); border: 1px solid #4caf50; color: #4caf50; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 14px; cursor: pointer; z-index: 10; }
+.lang-switch:active { background: #4caf50; color: #fff; }
+
+/* Модальное окно звонка */
 .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
 .modal-content { background: #1e1e1e; padding: 25px; border-radius: 15px; width: 100%; max-width: 350px; text-align: center; border: 1px solid #333; }
 .modal-title { font-size: 20px; font-weight: bold; margin-bottom: 15px; }
@@ -47,7 +55,7 @@ body { background-color: #121212; background-image: url('bg.png'); background-si
 </head>
 <body>
 
-<!-- Кнопка переключения языка -->
+<!-- Кнопка смены языка -->
 <button class="lang-switch" id="langBtn" onclick="toggleLang()">RO</button>
 
 <div class="header">
@@ -117,90 +125,37 @@ body { background-color: #121212; background-image: url('bg.png'); background-si
 </div>
 
 <script>
-// 1. Словари переводов
 const translations = {
-    ru: {
-        slogan: "Стройка и благоустройство под ключ",
-        cat1: "Строительные работы",
-        s1: "Укладка плитки", p1: "от 300 лей/м²",
-        s2: "Штукатурка стен", p2: "от 190 лей/м²",
-        s3: "Поклейка обоев", p3: "от 130 лей/м²",
-        s4: "Монтаж гипсокартона", p4: "от 180 лей/м²",
-        cat2: "Уборка территории",
-        s5: "Покос травы", p5: "от 500 лей/сотка",
-        s6: "Уборка листьев и мусора", p6: "от 200 лей/час",
-        s7: "Спил и обрезка деревьев", p7: "от 500 лей/шт",
-        s8: "Вывоз мусора", p8: "2000 лей / машина",
-        callBtn: "Позвонить мастеру",
-        modalTitle: "Контакты",
-        copyBtn: "Скопировать номер",
-        dialBtn: "Набрать",
-        cancelBtn: "Отмена"
-    },
-    ro: {
-        slogan: "Construcții și amenajări la cheie",
-        cat1: "Lucrări de construcție",
-        s1: "Montarea plăcilor", p1: "de la 300 lei/m²",
-        s2: "Tencuirea pereților", p2: "de la 190 lei/m²",
-        s3: "Lipirea tapetului", p3: "de la 130 lei/m²",
-        s4: "Montaj gips-carton", p4: "de la 180 lei/m²",
-        cat2: "Curățarea teritoriului",
-        s5: "Cosirea ierbii", p5: "de la 500 lei/sută",
-        s6: "Curățarea frunzelor și gunoiului", p6: "de la 200 lei/oră",
-        s7: "Tăierea și toaletarea copacilor", p7: "de la 500 lei/buc",
-        s8: "Evacuarea gunoiului", p8: "2000 lei / mașină",
-        callBtn: "Sunați maestrul",
-        modalTitle: "Contacte",
-        copyBtn: "Copiați numărul",
-        dialBtn: "Apelați",
-        cancelBtn: "Anulare"
-    }
+    ru: { slogan: "Стройка и благоустройство под ключ", cat1: "Строительные работы", s1: "Укладка плитки", p1: "от 300 лей/м²", s2: "Штукатурка стен", p2: "от 190 лей/м²", s3: "Поклейка обоев", p3: "от 130 лей/м²", s4: "Монтаж гипсокартона", p4: "от 180 лей/м²", cat2: "Уборка территории", s5: "Покос травы", p5: "от 500 лей/сотка", s6: "Уборка листьев и мусора", p6: "от 200 лей/час", s7: "Спил и обрезка деревьев", p7: "от 500 лей/шт", s8: "Вывоз мусора", p8: "2000 лей / машина", callBtn: "Позвонить мастеру", modalTitle: "Контакты", copyBtn: "Скопировать номер", dialBtn: "Набрать", cancelBtn: "Отмена" },
+    ro: { slogan: "Construcții și amenajări la cheie", cat1: "Lucrări de construcție", s1: "Montarea plăcilor", p1: "de la 300 lei/m²", s2: "Tencuirea pereților", p2: "de la 190 lei/m²", s3: "Lipirea tapetului", p3: "de la 130 lei/m²", s4: "Montaj gips-carton", p4: "de la 180 lei/m²", cat2: "Curățarea teritoriului", s5: "Cosirea ierbii", p5: "de la 500 lei/sută", s6: "Curățarea frunzelor și gunoiului", p6: "de la 200 lei/oră", s7: "Tăierea și toaletarea copacilor", p7: "de la 500 lei/buc", s8: "Evacuarea gunoiului", p8: "2000 lei / mașină", callBtn: "Sunați maestrul", modalTitle: "Contacte", copyBtn: "Copiați numărul", dialBtn: "Apelați", cancelBtn: "Anulare" }
 };
 
 let currentLang = localStorage.getItem('gospodar_lang') || 'ru';
 
-// 2. Функция смены языка
 function setLanguage(lang) {
-    currentLang = lang;
+    currentLang = lang; 
     localStorage.setItem('gospodar_lang', lang);
-    
-    // Меняем текст кнопки переключения
     document.getElementById('langBtn').innerText = lang === 'ru' ? 'RO' : 'RU';
     document.documentElement.lang = lang;
-
-    // Проходимся по всем элементам с атрибутом data-i18n
     const elements = document.querySelectorAll('[data-i18n]');
     elements.forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-            el.innerText = translations[lang][key];
-        }
+        if (translations[lang] && translations[lang][key]) { el.innerText = translations[lang][key]; }
     });
 }
 
-// 3. Функция-переключатель для кнопки
-function toggleLang() {
-    const newLang = currentLang === 'ru' ? 'ro' : 'ru';
-    setLanguage(newLang);
-}
+function toggleLang() { setLanguage(currentLang === 'ru' ? 'ro' : 'ru'); }
 
-// 4. Инициализация при загрузке
-window.onload = function() {
-    setLanguage(currentLang);
-    
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').catch(function() {});
-    }
+window.onload = function() { 
+    setLanguage(currentLang); 
 };
 
 function showModal() { document.getElementById('callModal').style.display = 'flex'; }
 function hideModal() { document.getElementById('callModal').style.display = 'none'; }
 function copyNumber() {
     var phone = document.getElementById('phoneText').innerText;
-    var textArea = document.createElement("textarea");
-    textArea.value = phone;
-    document.body.appendChild(textArea);
-    textArea.select();
+    var textArea = document.createElement("textarea"); textArea.value = phone;
+    document.body.appendChild(textArea); textArea.select();
     try { 
         document.execCommand('copy'); 
         alert(currentLang === 'ru' ? 'Номер ' + phone + ' скопирован!' : 'Numărul ' + phone + ' a fost copiat!'); 
