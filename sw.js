@@ -1,4 +1,4 @@
-const CACHE = "gospodar-v1";
+const CACHE = "gospodar-v2"; // Изменили версию с v1 на v2
 const ASSETS = ["./", "./manifest.json", "./icon.png", "./bg.png"];
 
 self.addEventListener("install", e => {
@@ -7,7 +7,12 @@ self.addEventListener("install", e => {
 });
 
 self.addEventListener("activate", e => {
-  e.waitUntil(self.clients.claim());
+  e.waitUntil(
+    caches.keys().then(keys => {
+      // Удаляем все старые кэши
+      return Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)));
+    }).then(() => self.clients.claim())
+  );
 });
 
 self.addEventListener("fetch", e => {
