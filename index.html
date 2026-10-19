@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -13,6 +13,11 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: system-ui, -apple-system, sans-serif; }
 body { background-color: #121212; background-image: url('bg.png'); background-size: cover; background-position: center; background-attachment: fixed; color: #fff; padding: 20px; padding-bottom: 100px; }
+
+/* Кнопка переключения языка */
+.lang-switch { position: absolute; top: 20px; right: 20px; background: rgba(76, 175, 80, 0.2); border: 1px solid #4caf50; color: #4caf50; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 14px; cursor: pointer; z-index: 10; }
+.lang-switch:active { background: #4caf50; color: #fff; }
+
 .header { text-align: center; margin-bottom: 30px; margin-top: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 .logo { font-size: 28px; font-weight: 900; letter-spacing: 1px; color: #fff; text-transform: uppercase; }
 .logo span { color: #4caf50; }
@@ -27,6 +32,7 @@ body { background-color: #121212; background-image: url('bg.png'); background-si
 .service-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
 .service-name { font-size: 15px; font-weight: 500; }
 .service-price { font-size: 13px; font-weight: bold; color: #1ed760; background: rgba(30, 215, 96, 0.15); padding: 4px 10px; border-radius: 6px; align-self: flex-start; }
+
 .call-button { position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(90deg, #4caf50, #45a049); color: #fff; border: none; font-size: 18px; font-weight: bold; padding: 18px; text-align: center; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 -4px 15px rgba(0,0,0,0.5); z-index: 100; cursor: pointer; }
 .call-button svg { width: 24px; height: 24px; fill: currentColor; }
 .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
@@ -41,76 +47,152 @@ body { background-color: #121212; background-image: url('bg.png'); background-si
 </head>
 <body>
 
+<!-- Кнопка переключения языка -->
+<button class="lang-switch" id="langBtn" onclick="toggleLang()">RO</button>
+
 <div class="header">
   <div class="logo">GOSPODAR<span>PRO</span></div>
-  <div class="slogan">Стройка и благоустройство под ключ</div>
+  <div class="slogan" data-i18n="slogan">Стройка и благоустройство под ключ</div>
 </div>
 
 <div class="category-title">
     <svg viewBox="0 0 24 24"><path d="M13.78 15.3l1.42-1.42L21 20.05l-1.42 1.42-5.8-6.17zm-8.13-4.63l4.24-4.24 1.41 1.41-4.24 4.24-1.41-1.41zm11.31-5.65l1.42-1.42L21 3.19l-1.42 1.42-5.8-6.17-1.41 1.41zM2.81 2.81L1.4 4.22 7.58 10.4l-1.41 1.41L2.81 8.46l-1.41 1.41 6.17 6.17 1.41-1.41-4.24-4.24z"/></svg>
-    Строительные работы
+    <span data-i18n="cat1">Строительные работы</span>
 </div>
 
 <div class="service-card">
   <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
-  <div class="service-info"><div class="service-name">Укладка плитки</div><div class="service-price">от 300 лей/м²</div></div>
+  <div class="service-info"><div class="service-name" data-i18n="s1">Укладка плитки</div><div class="service-price" data-i18n="p1">от 300 лей/м²</div></div>
 </div>
 <div class="service-card">
   <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg></div>
-  <div class="service-info"><div class="service-name">Штукатурка стен</div><div class="service-price">от 190 лей/м²</div></div>
+  <div class="service-info"><div class="service-name" data-i18n="s2">Штукатурка стен</div><div class="service-price" data-i18n="p2">от 190 лей/м²</div></div>
 </div>
 <div class="service-card">
   <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg></div>
-  <div class="service-info"><div class="service-name">Поклейка обоев</div><div class="service-price">от 130 лей/м²</div></div>
+  <div class="service-info"><div class="service-name" data-i18n="s3">Поклейка обоев</div><div class="service-price" data-i18n="p3">от 130 лей/м²</div></div>
 </div>
 <div class="service-card">
   <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg></div>
-  <div class="service-info"><div class="service-name">Монтаж гипсокартона</div><div class="service-price">от 180 лей/м²</div></div>
+  <div class="service-info"><div class="service-name" data-i18n="s4">Монтаж гипсокартона</div><div class="service-price" data-i18n="p4">от 180 лей/м²</div></div>
 </div>
 
 <div class="category-title">
     <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C12 20 21 17 21 8zM14.76 12.5c-1.23 1.2-3.37 2.2-5.76 2.2 1-1.1 2.8-2.2 4.76-2.5z"/></svg>
-    Уборка территории
+    <span data-i18n="cat2">Уборка территории</span>
 </div>
 
 <div class="service-card">
   <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg></div>
-  <div class="service-info"><div class="service-name">Покос травы</div><div class="service-price">от 500 лей/сотка</div></div>
+  <div class="service-info"><div class="service-name" data-i18n="s5">Покос травы</div><div class="service-price" data-i18n="p5">от 500 лей/сотка</div></div>
 </div>
 <div class="service-card">
   <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4zM6 7v13c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zm10 11H8V9h8v9z"/></svg></div>
-  <div class="service-info"><div class="service-name">Уборка листьев и мусора</div><div class="service-price">от 200 лей/час</div></div>
+  <div class="service-info"><div class="service-name" data-i18n="s6">Уборка листьев и мусора</div><div class="service-price" data-i18n="p6">от 200 лей/час</div></div>
 </div>
 <div class="service-card">
   <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M14.85 3.15L12 6l-2.85-2.85c-.39-.39-1.02-.39-1.41 0l-1.41 1.41c-.39.39-.39 1.02 0 1.41L9.17 9 6.35 11.83c-.39.39-.39 1.02 0 1.41l1.41 1.41c.39.39 1.02.39 1.41 0L12 11.83l2.83 2.83c.39.39 1.02.39 1.41 0l1.41-1.41c.39-.39.39-1.02 0-1.41L14.83 9l2.85-2.85c.39-.39.39-1.02 0-1.41l-1.41-1.41c-.39-.38-1.03-.38-1.42.01z"/></svg></div>
-  <div class="service-info"><div class="service-name">Спил и обрезка деревьев</div><div class="service-price">от 500 лей/шт</div></div>
+  <div class="service-info"><div class="service-name" data-i18n="s7">Спил и обрезка деревьев</div><div class="service-price" data-i18n="p7">от 500 лей/шт</div></div>
 </div>
 <div class="service-card">
   <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div>
-  <div class="service-info"><div class="service-name">Вывоз мусора</div><div class="service-price">2000 лей / машина</div></div>
+  <div class="service-info"><div class="service-name" data-i18n="s8">Вывоз мусора</div><div class="service-price" data-i18n="p8">2000 лей / машина</div></div>
 </div>
 
 <button onclick="showModal()" class="call-button">
   <svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
-  Позвонить мастеру
+  <span data-i18n="callBtn">Позвонить мастеру</span>
 </button>
 
 <div id="callModal" class="modal-overlay">
   <div class="modal-content">
-    <div class="modal-title">Контакты</div>
+    <div class="modal-title" data-i18n="modalTitle">Контакты</div>
     <div class="phone-number" id="phoneText">+37367771666</div>
     <div class="btn-group">
-      <button class="btn-primary" onclick="copyNumber()">Скопировать номер</button>
-      <a href="tel:+37367771666" class="btn-secondary">Набрать</a>
+      <button class="btn-primary" data-i18n="copyBtn" onclick="copyNumber()">Скопировать номер</button>
+      <a href="tel:+37367771666" class="btn-secondary" data-i18n="dialBtn">Набрать</a>
     </div>
-    <button class="btn-cancel" onclick="hideModal()">Отмена</button>
+    <button class="btn-cancel" data-i18n="cancelBtn" onclick="hideModal()">Отмена</button>
   </div>
 </div>
 
 <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(function() {});
+// 1. Словари переводов
+const translations = {
+    ru: {
+        slogan: "Стройка и благоустройство под ключ",
+        cat1: "Строительные работы",
+        s1: "Укладка плитки", p1: "от 300 лей/м²",
+        s2: "Штукатурка стен", p2: "от 190 лей/м²",
+        s3: "Поклейка обоев", p3: "от 130 лей/м²",
+        s4: "Монтаж гипсокартона", p4: "от 180 лей/м²",
+        cat2: "Уборка территории",
+        s5: "Покос травы", p5: "от 500 лей/сотка",
+        s6: "Уборка листьев и мусора", p6: "от 200 лей/час",
+        s7: "Спил и обрезка деревьев", p7: "от 500 лей/шт",
+        s8: "Вывоз мусора", p8: "2000 лей / машина",
+        callBtn: "Позвонить мастеру",
+        modalTitle: "Контакты",
+        copyBtn: "Скопировать номер",
+        dialBtn: "Набрать",
+        cancelBtn: "Отмена"
+    },
+    ro: {
+        slogan: "Construcții și amenajări la cheie",
+        cat1: "Lucrări de construcție",
+        s1: "Montarea plăcilor", p1: "de la 300 lei/m²",
+        s2: "Tencuirea pereților", p2: "de la 190 lei/m²",
+        s3: "Lipirea tapetului", p3: "de la 130 lei/m²",
+        s4: "Montaj gips-carton", p4: "de la 180 lei/m²",
+        cat2: "Curățarea teritoriului",
+        s5: "Cosirea ierbii", p5: "de la 500 lei/sută",
+        s6: "Curățarea frunzelor și gunoiului", p6: "de la 200 lei/oră",
+        s7: "Tăierea și toaletarea copacilor", p7: "de la 500 lei/buc",
+        s8: "Evacuarea gunoiului", p8: "2000 lei / mașină",
+        callBtn: "Sunați maestrul",
+        modalTitle: "Contacte",
+        copyBtn: "Copiați numărul",
+        dialBtn: "Apelați",
+        cancelBtn: "Anulare"
+    }
+};
+
+let currentLang = localStorage.getItem('gospodar_lang') || 'ru';
+
+// 2. Функция смены языка
+function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('gospodar_lang', lang);
+    
+    // Меняем текст кнопки переключения
+    document.getElementById('langBtn').innerText = lang === 'ru' ? 'RO' : 'RU';
+    document.documentElement.lang = lang;
+
+    // Проходимся по всем элементам с атрибутом data-i18n
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+            el.innerText = translations[lang][key];
+        }
+    });
 }
+
+// 3. Функция-переключатель для кнопки
+function toggleLang() {
+    const newLang = currentLang === 'ru' ? 'ro' : 'ru';
+    setLanguage(newLang);
+}
+
+// 4. Инициализация при загрузке
+window.onload = function() {
+    setLanguage(currentLang);
+    
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(function() {});
+    }
+};
+
 function showModal() { document.getElementById('callModal').style.display = 'flex'; }
 function hideModal() { document.getElementById('callModal').style.display = 'none'; }
 function copyNumber() {
@@ -119,10 +201,15 @@ function copyNumber() {
     textArea.value = phone;
     document.body.appendChild(textArea);
     textArea.select();
-    try { document.execCommand('copy'); alert('Номер ' + phone + ' скопирован!'); } 
-    catch (err) { alert('Зажмите палец на номере, чтобы скопировать.'); }
+    try { 
+        document.execCommand('copy'); 
+        alert(currentLang === 'ru' ? 'Номер ' + phone + ' скопирован!' : 'Numărul ' + phone + ' a fost copiat!'); 
+    } 
+    catch (err) { 
+        alert(currentLang === 'ru' ? 'Зажмите палец на номере, чтобы скопировать.' : 'Țineți apăsat pe număr pentru a copia.'); 
+    }
     document.body.removeChild(textArea);
 }
 </script>
 </body>
-  </html>
+</html>
